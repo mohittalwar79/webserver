@@ -1,7 +1,7 @@
 ###New website
 
 FROM fros/centos9
-RUN mkdir /home/jenkins/webtool
+RUN mkdir -p /home/jenkins/webtool
 RUN dnf update -y && dnf install -y zip unzip httpd wget && yum clean all
 RUN  systemctl enable httpd
 RUN cd /home/jenkins/webtool && \
