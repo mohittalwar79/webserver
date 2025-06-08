@@ -13,7 +13,10 @@ rm -f /lib/systemd/system/basic.target.wants/*;\
 rm -f /lib/systemd/system/anaconda.target.wants/*;
 VOLUME [ "/sys/fs/cgroup" ]
 CMD ["/usr/sbin/init"]
-RUN yum update -y && yum install -y zip unzip httpd wget && yum clean all
+RUN mkdir /etc/yum.repos.d/old/ && mv /etc/yum.repos.d/*.repo /etc/yum.repos.d/old/
+ADD CentOS.repo /etc/yum.repos.d/
+ADD epel.repo /etc/yum.repos.d/
+RUN yum clean all  && yum install -y zip unzip httpd wget
 RUN  systemctl enable httpd
 ADD https://templatemo.com/download/templatemo_590_topic_listing /var/www/html/
 RUN cd /var/www/html/ && \
@@ -21,3 +24,4 @@ RUN cd /var/www/html/ && \
 RUN mv  /var/www/html/templatemo_590_topic_listing/* /var/www/html/
 CMD ["/usr/sbin/httpd", "-DFOREGROUND"]
 EXPOSE 80
+
