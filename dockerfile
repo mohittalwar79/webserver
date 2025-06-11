@@ -17,11 +17,12 @@ RUN mkdir /etc/yum.repos.d/old/ && mv /etc/yum.repos.d/*.repo /etc/yum.repos.d/o
 ADD CentOS.repo /etc/yum.repos.d/
 ADD epel.repo /etc/yum.repos.d/
 RUN yum clean all  && yum install -y zip unzip httpd wget
+RUN mkdir /var/www/htmlold && cp /var/www/html /var/www/htmlold && rm -rf /var/www/html/*
 RUN  systemctl enable httpd
-ADD https://templatemo.com/download/templatemo_590_topic_listing /var/www/html/
+ADD https://templatemo.com/download/templatemo_591_villa_agency /var/www/html/
 RUN cd /var/www/html/ && \
-    mv templatemo_590_topic_listing templatemo_590_topic_listing.zip && unzip  templatemo_590_topic_listing.zip -d ./
-RUN mv  /var/www/html/templatemo_590_topic_listing/* /var/www/html/
+    mv templatemo_591_villa_agency templatemo_591_villa_agency.zip && unzip  templatemo_591_villa_agency.zip -d ./
+RUN mv  /var/www/html/templatemo_591_villa_agency/* /var/www/html/
 CMD ["/usr/sbin/httpd", "-DFOREGROUND"]
 EXPOSE 80
 
